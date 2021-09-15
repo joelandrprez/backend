@@ -9,11 +9,16 @@ const {dbConnection} = require('./DB/config')
 
 const app = express();
 
-app.use(cors());
+
+
+app.options('*', cors());
 
 app.use(express.json()); // parseo de las rutas
 
 dbConnection();
+
+//directorio public
+app.use(express.static('public'))
 
 // RUTAS
 app.use('/api/usuarios',require('./routes/usuarios.routes'));
