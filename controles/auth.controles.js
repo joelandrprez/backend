@@ -67,7 +67,7 @@ const loginGoogle = async (req,res=response)=>{
 
         await usuario.save();
 
-        const token = await generarJWT(usuarioDB.id)
+        const token = await generarJWT(usuario.id)
 
         res.status(200).json({
             ok:true,
@@ -75,6 +75,7 @@ const loginGoogle = async (req,res=response)=>{
         })
         
     } catch (error) {
+        console.log(error);
         res.status(500).json({
             ok:false,
             msg:'token no es correcto'
@@ -86,7 +87,22 @@ const loginGoogle = async (req,res=response)=>{
 
 
 }
+const renewToken = async (req,res=response) =>{
+    const uid = req.uid;
+
+    const token = await generarJWT(uid)
+
+    const usuario = await Usuario.findById(uid)
+
+    res.status(200).json({
+        ok:true,
+        token,
+        usuario
+    })
+}
+
 module.exports = {
     login,
-    loginGoogle
+    loginGoogle,
+    renewToken
 }

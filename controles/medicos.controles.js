@@ -116,11 +116,34 @@ const deleteMedicos = async (req,res)=>{
         })
     }
 }
+const getMedicosbyid = async (req,res)=>{
+
+    const uid = req.params.id;
+
+    try {
+
+        const medicos = await Medicos.findById(uid)
+        .populate('usuario','nombre email img')
+        .populate('hospital','nombre')
+
+        res.status('200').json({
+        ok:true,
+        medicos
+        })
+
+        
+    } catch (error) {
+        console.log(error);
+    }
+
+
+}
 
 
 module.exports = {
     getMedicos,
     createMedicos,
     updateMedicos,
-    deleteMedicos
+    deleteMedicos,
+    getMedicosbyid
 }

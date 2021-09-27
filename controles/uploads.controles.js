@@ -32,7 +32,7 @@ const fileUpload = ( req , res =response ) =>{
 
     //validar extension
 
-    const extensionValida = ['png','jpg','jpeg','gif']
+    const extensionValida = ['png','jpg','jpeg','gif','JPG']
 
     if(!extensionValida.includes(extension)){
         return res.status(400).json({

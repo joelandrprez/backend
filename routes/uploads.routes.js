@@ -18,7 +18,8 @@ router.use(ExpressfileUpload());
 
 
 router.put('/:tipo/:id',[validarJWT ],fileUpload);
-router.get('/:tipo/:img',[validarJWT ],retornarImagen);
+
+router.get('/:tipo/:img',[],retornarImagen);
 
 
 

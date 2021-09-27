@@ -101,7 +101,22 @@ const updateUsuarios = async (req,res =response) => {
             
             }   
         }
+
         campos.email = email;
+
+
+
+        if(!usuarioDb.google){
+            campos.email = email;
+        }else if(usuarioDb.email !== email){
+
+            return res.status(400).json({
+                ok:true,
+                msg:'Usuarios de Google no pueden cambiar su correo'
+            })
+        }
+
+        
 
         const usuarioActualizado = await Usuario.findByIdAndUpdate(uid,campos,{new:true});
 
@@ -121,7 +136,9 @@ const updateUsuarios = async (req,res =response) => {
     }
 }
 const deleteUsuarios = async (req,res)=>{
+
     const uid = req.params.id;
+    const idtoken = req.uid;
     try {
         const usuarioDB = await Usuario.findById(uid);
 

@@ -8,9 +8,10 @@ const { Router } = require('express');
 const { route } = require('./usuarios.routes');
 
 // controladores 
-const { login,loginGoogle }  = require('../controles/auth.controles');
+const { login,loginGoogle,renewToken }  = require('../controles/auth.controles');
 const { check } = require('express-validator');
 const { validarCampos } = require('../middlewares/validar-campos.middlewares');
+const { validarJWT } = require('../middlewares/validar-jwt.middlewares');
 
 
 const router = Router();
@@ -24,7 +25,10 @@ router.post('/google',[
                 check('token','el token de google debe ser valido').not().isEmpty(),
                 validarCampos
                 ],loginGoogle);                            
-
+router.get('/renew',[
+                validarCampos,
+                validarJWT
+                ],renewToken); 
 
 
 

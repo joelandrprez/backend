@@ -1,4 +1,3 @@
-const { application } = require('express');
 const express = require ('express');
 require ('dotenv').config();
 const cors = require('cors')
@@ -11,7 +10,7 @@ const app = express();
 
 
 
-app.options('*', cors());
+app.use(cors())
 
 app.use(express.json()); // parseo de las rutas
 
