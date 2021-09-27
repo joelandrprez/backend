@@ -2,9 +2,15 @@ const Usuario = require('../models/usuarios.model')
 const { request,response } = require('express')
 const bcrypt = require('bcryptjs');
 const { generarJWT } = require('../helpers/jwt')
-const { googleVerify } = require('../helpers/google-verify')
+const { googleVerify } = require('../helpers/google-verify');
+
+const { getMenufrontEnd } = require('../helpers/menu-frontend');
+
+
+
 
 const login = async (req,res =response)=>{
+
     const { email,password } = req.body;
     try {
         // verificar email
@@ -28,12 +34,17 @@ const login = async (req,res =response)=>{
 
         const token = await generarJWT(usuarioDB.id);
 
+
+
         res.status(200).json({
             ok:true,
-            token
+            token,
+            menu:getMenufrontEnd(usuarioDB.role)
+            
         })
         
     } catch (error) {
+        console.log(error);
         res.status(500).json({
             ok:false,
             msg:'error inesperado revisar log'
@@ -71,7 +82,8 @@ const loginGoogle = async (req,res=response)=>{
 
         res.status(200).json({
             ok:true,
-            token
+            token,
+            menu:getMenufrontEnd(usuario.role)
         })
         
     } catch (error) {
@@ -97,7 +109,8 @@ const renewToken = async (req,res=response) =>{
     res.status(200).json({
         ok:true,
         token,
-        usuario
+        usuario,
+        menu:getMenufrontEnd(usuario.role)
     })
 }
 
