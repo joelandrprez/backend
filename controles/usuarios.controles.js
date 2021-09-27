@@ -64,7 +64,7 @@ const createUsuarios = async (req,res) =>{
             ok:true,
             usuarios:usuario,
             token,
-            menu:getMenufrontEnd(usuarioDB.role)
+            menu:getMenufrontEnd(usuario.role)
         });
 
     } catch (error) {
